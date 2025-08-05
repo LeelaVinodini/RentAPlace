@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RentAPlace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #fef3f3, #f8f1ff);
+  color: #333;
+}
+.logo a {
+  text-decoration: none;
+  background: linear-gradient(to right, #89f7fe, #66a6ff, #d4a5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-size: 2em;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+}
+.logo a:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
+.logo:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
+h1 {
+  text-align: center;
+  color: #a64ac9;
+  margin-top: 10px;
+  font-size: 2.5em;
+}
+#propertyList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+.card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(166, 74, 201, 0.2);
+}
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid #f3e5f5;
+}
+.card-content {
+  padding: 20px;
+}
+.card-content h3 {
+  margin-top: 0;
+  color: #c94fcf;
+  font-size: 1.5em;
+}
+.card-content p {
+  color: #666;
+  margin: 10px 0 0;
+  font-size: 1em;
+}
+button {
+  background: #c94fcf;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+button:hover {
+  background: #a64ac9;
+}
+body::before {
+  content: "";
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #c592d5, #ea7adb);
+  border-radius: 50%;
+  top: -100px;
+  left: -100px;
+  z-index: -1;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+body::after {
+  content: "";
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #ffe6f1, #ffffff);
+  border-radius: 50%;
+  bottom: -80px;
+  right: -80px;
+  z-index: -1;
+  filter: blur(80px);
+  opacity: 0.5;
+}
+  </style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #f7f7f7;
+      color: #333;
+    }
+    header {
+      background-color: rgb(238, 153, 231);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      color: #d48cf1;
+      font-weight: 600;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+    }
+    .hero {
+      background: url('https://source.unsplash.com/1600x600/?home,rent,travel') no-repeat center center/cover;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      background-color: rgba(0,0,0,0.5);
+      padding: 1rem;
+      border-radius: 12px;
+    }
+    .search {
+      margin: 2rem auto;
+      max-width: 800px;
+      padding: 1rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .search input, .search select, .search button {
+      padding: 0.7rem;
+      margin: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .search button {
+      background-color:  #639ded;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .properties {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 1rem;
+    }
+    .card-content h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: #38ffe4;
+    }
+    .card-content p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .form-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 10000;
+      border-radius: 10px;
+      max-width: 400px;
+    }
+    .form-popup input, .form-popup button {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .form-popup button {
+      background-color: #639ded;
+      color: white;
+      border: none;
+    }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px rgba(166, 74, 201, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo {
+  font-size: 2em;
+  font-weight: 700;
+  color: #639ded;
+  font-family: 'Poppins', sans-serif;
+}
+.nav-links a {
+  margin-left: 30px;
+  text-decoration: none;
+  color: #5a5a5a;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: #a64ac9;
+}
+.form-popup button {
+  background-color: #639ded;
+  color: white;
+  margin-top: 5px;
+}
+.form-popup button:hover {
+  background-color: #4a87cc;
+}
+.form-popup h3 {
+  margin-bottom: 20px;
+  color:#639ded;
+  font-weight: 600;
+}
+.form-popup input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.form-popup input:focus {
+  border-color: #639ded;
+  outline: none;
+}
+.hero {
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(circle at 30% 30%, #d6b1f5, #a5c7f3, #d0bcf2);
+  position: relative;
+  overflow: hidden;
+}
+.hero h1 {
+  font-size: 3em;
+  font-weight: bold;
+  color: #f5faff; 
+  padding: 25px 50px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.07); 
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(173, 216, 230, 0.35);  
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+.hero h1:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 15px 40px rgba(164, 74, 201, 0.25);
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+    .explore-section {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #f1ecf5;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    .explore-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #333;
+    }
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .explore-grid button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #af98ef;
+      padding: 15px 20px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .explore-grid button:hover {
+      background: #639ded;
+      transform: translateY(-2px);
+    }
+    .explore-section,
+    .amenities-section {
+      padding: 3rem 2rem;
+      background: #f7f7f7;
+      text-align: center;
+    }
+    .explore-section h2,
+    .amenities-section h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    .explore-section p,
+    .amenities-section p {
+      font-size: 1rem;
+      color: #777;
+      margin-bottom: 2rem;
+    }
+.explore-buttons,
+.amenities-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+  overflow: visible;  
+}
+.explore-buttons button,
+.amenities-buttons button {
+  background: #af98ef;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: left;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  transform: scale(1);
+  z-index: 1;
+  position: relative;
+  width: 200px;
+  height: 80px;  
+}
+.explore-buttons button:hover,
+.amenities-buttons button:hover {
+  transform: scale(1.5); 
+  z-index: 10;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+    .explore-buttons button i,
+    .amenities-buttons button i {
+      font-size: 1.2rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #fff;
+      margin-top: 2rem;
+      color: #888;
+    }
+    .explore-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+  overflow: visible; 
+}
+.explore-buttons button {
+  background: #af98ef;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: left;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  transform: scale(1);
+  z-index: 1;
+  position: relative;
+  width: 200px;
+  height: 80px;
+}
+.explore-section button:hover {
+  transform: scale(1.35);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+}
+.explore-section button:hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.zoom-button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+  overflow: visible;
+  justify-content: center;
+}
+.zoom-button {
+  background: #af98ef;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  transform: scale(1);
+  z-index: 1;
+  position: relative;
+  width: 200px;
+  height: 80px;
+  white-space: normal;
+  line-height: 1.2;
+  box-shadow: #000000;
+}
+.zoom-button:hover {
+  transform: scale(1.5);
+  z-index: 10;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+  </style>
+</head>
+<body> 
+  <header>
+<div class="logo">
+  <a href="RentAPlace.html">RentAPlace</a>
+</div>
+    <nav>
+      <a href="#" onclick="openForm('login')">Login</a>
+      <a href="#" onclick="openForm('register')">Register</a>
+      <a href="#" onclick="openForm('owner')">For Owners</a>
+    </nav>
+  </header>
+<section class="hero">
+<h1 onclick="scrollToSearch()" style="cursor:pointer;">Find Your Perfect Stay</h1>
+</section>
+<div class="search" id="searchSection">
+    <input type="text" placeholder="Search by location...">
+    <input type="date" placeholder="Check-in">
+    <input type="date" placeholder="Check-out">
+    <select>
+      <option>Flat</option>
+      <option>Villa</option>
+      <option>Apartment</option>
+    </select>
+    <select>
+      <option>Pool</option>
+      <option>Beach</option>
+      <option>Garden Facing</option>
+    </select>
+    <button onclick="searchProperties()">Search</button>
+  </div>
+  <div class="properties" id="propertyList"></div>
+<div id="login" class="form-popup">
+  <h3>User Login</h3>
+  <input type="email" id="loginEmail" placeholder="Email" required>
+  <input type="password" id="loginPass" placeholder="Password" required minlength="6">
+  <button onclick="handleLogin()">Login</button>
+</div>
+<div id="register" class="form-popup">
+  <h3>User Registration</h3>
+  <input type="text" id="regName" placeholder="Full Name" required>
+  <input type="email" id="regEmail" placeholder="Email" required>
+  <input type="password" id="regPass" placeholder="Password (min 6 chars)" required minlength="6">
+  <button onclick="handleRegister()">Register</button>
+</div>
+<div id="owner" class="form-popup">
+  <h3>Owner Portal</h3>
+  <input type="text" id="propName" placeholder="Property Name" required>
+  <input type="text" id="propLoc" placeholder="Location" required>
+  <input type="text" id="propFeat" placeholder="Features (e.g. Pool, Beach Facing)" required>
+  <button onclick="handleSubmitProperty()">Submit Property</button>
+</div>
+<script>
+  function isValidEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+  function handleLogin() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPass").value.trim();
+    if (!email || !pass) {
+      alert("⚠ Please fill in all login fields!");
+    } else if (!isValidEmail(email)) {
+      alert("🚫 Invalid email format!");
+    } else if (pass.length < 6) {
+      alert("🔒 Password must be at least 6 characters!");
+    } else {
+      alert("✅ Logged in successfully!");
+      closeForms();
+    }
+  }
+  function handleRegister() {
+    const name = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const pass = document.getElementById("regPass").value.trim();
+    if (!name || !email || !pass) {
+      alert("⚠ All registration fields must be filled!");
+    } else if (!isValidEmail(email)) {
+      alert("🚫 Enter a valid email!");
+    } else if (pass.length < 6) {
+      alert("🔒 Password too short (min 6 characters)!");
+    } else {
+      alert("🎉 Registered successfully!");
+      closeForms();
+    }
+  }
+  function handleSubmitProperty() {
+    const propName = document.getElementById("propName").value.trim();
+    const propLoc = document.getElementById("propLoc").value.trim();
+    const propFeat = document.getElementById("propFeat").value.trim();
+
+    if (!propName || !propLoc || !propFeat) {
+      alert("⚠ Fill in all property details!");
+    } else {
+      alert("🏡 Property submitted successfully!");
+      closeForms();
+    }
+  }
+  function closeForms() {
+    document.querySelectorAll('.form-popup').forEach(p => p.style.display = 'none');
+  }
+  window.addEventListener('click', function(e) {
+    document.querySelectorAll('.form-popup').forEach(popup => {
+      if (!popup.contains(e.target) && !e.target.matches('a')) {
+        popup.style.display = 'none';
+      }
+    });
+  });
+</script>
+<script>
+  function scrollToSearch() {
+    document.getElementById("searchSection").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+</script>
+<div class="explore-section">
+  <h2>You might also be interested in exploring</h2>
+  <div class="explore-grid zoom-button-container">
+    <button class="zoom-button">🏡 Apartments with a hot tub</button>
+    <button class="zoom-button">🏘 Holiday cottages</button>
+    <button class="zoom-button">🌊 Beachfront rentals</button>
+    <button class="zoom-button">🏖 Beach cabins</button>
+    <button class="zoom-button">🏠 Big cottages</button>
+    <button class="zoom-button">🐾 Luxury dog-friendly cottages</button>
+    <button class="zoom-button">🛁 Holiday cottages with a hot tub</button>
+    <button class="zoom-button">🐶 Pet-friendly holiday rentals</button>
+    <button class="zoom-button">🏡 Farm houses</button>
+    <button class="zoom-button">🏚 Private holiday rentals</button>
+    <button class="zoom-button">🏘 Bungalow rentals</button>
+    <button class="zoom-button">🏞 Farm cottages</button>
+    <button class="zoom-button">🏊 House rentals with a pool</button>
+    <button class="zoom-button">🏡 Holiday houses</button>
+    <button class="zoom-button">🏕 Cabin rentals with a pool</button>
+  </div>
+</div>
+  <div class="amenities-section">
+    <h2>Get specific with your favourite amenities</h2>
+    <p>Choose from top features like these – and more – for a personalised stay.</p>
+    <div class="amenities-buttons">
+      <button><i class="fas fa-swimming-pool"></i> Pool</button>
+      <button><i class="fas fa-parking"></i> Free parking</button>
+      <button><i class="fas fa-soap"></i> Washing machine</button>
+      <button><i class="fas fa-snowflake"></i> AC</button>
+      <button><i class="fas fa-fire"></i> Fireplace</button>
+      <button><i class="fas fa-tv"></i> TV</button>
+      <button><i class="fas fa-thermometer-half"></i> Geyser</button>
+      <button><i class="fas fa-drumstick-bite"></i> Barbeque</button>
+      <button><i class="fas fa-free wifi"></i> Wi-Fi</button>
+      <button><i class="fas fa-free food "></i> Kitchen</button>
+      <button><i class="fas fa-free bar "></i> House Bar</button>
+      <button><i class="fas fa-free inpool "></i> Jacuzzi</button>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 RentAPlace. All rights reserved.
+  </footer>
+  <script>
+    const properties = [
+      {
+        name: 'Beachside Villa',
+        desc: 'A luxurious villa facing the beach.',
+        image: 'https://manage.isleblue.co/uploads/villas/images/3005/turks-and-caicos-villa-positano-2015-014.jpg',
+      },
+      {
+        name: 'Mountain Retreat',
+        desc: 'A cozy place near the mountains with garden view.',
+        image: 'https://images.rezfusion.com/evrn/RIRIRE/222793/9251810296.jpg?optimize=true&rotate=true&quality=70',
+      },
+      {
+        name: 'City Apartment',
+        desc: 'A modern apartment in the heart of the city.',
+        image: 'https://photos2.theblueground.com/736/pg32976-o-f5a7dea0-c7af-8e71-d5dd-9b483d2c0af5.jpg?quality=low',
+      },
+    ];
+    function searchProperties() {
+      const container = document.getElementById("propertyList");
+      container.innerHTML = "";
+      properties.forEach(prop => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${prop.image}" alt="Property">
+          <div class="card-content">
+            <h3>${prop.name}</h3>
+            <p>${prop.desc}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+    function openForm(id) {
+      document.querySelectorAll('.form-popup').forEach(p => p.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+    searchProperties();
+</script>
+  </script>
+</body>
+</html>
